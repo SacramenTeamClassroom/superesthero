@@ -2,12 +2,15 @@ package fr.superesthero.models;
 
 import static fr.superesthero.App.factory;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,18 +22,17 @@ public class Hero {
     
     @optionnal
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer id;
     public String name;
     public String slug;
     @optionnal
     @ManyToMany
-    public ArrayList<Category> categories;
+    public List<Category> categories;
 
     public static HashMap<Integer, Hero> list = new HashMap<>();
 
-    public static int i = 0;
-
-    public Hero(String name, String slug, ArrayList<Category> categories) {
+    public Hero(String name, String slug, List<Category> categories) {
         this.name = name;
         this.slug = slug;
         this.categories = categories;
@@ -44,9 +46,8 @@ public class Hero {
         return list.put(id, h);
     }
 
-    public static void add(String name, String slug, ArrayList<Category> categories) {
+    public static void add(String name, String slug, List<Category> categories) {
         var h = new Hero(name,slug, categories);
-        h.id = i++;
         persist(h);
         list.put(h.id,h);
     }
