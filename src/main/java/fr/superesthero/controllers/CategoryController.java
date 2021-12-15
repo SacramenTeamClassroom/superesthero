@@ -14,11 +14,11 @@ public class CategoryController {
     public static void init() {
     
         post("/category", (req, res) -> {
-            Category b;
+            Category c;
             try {
-                b = check(convert.fromJson(req.body(), Category.class));
-                if (b.id != null) throw new Exception("No id allowed");
-                Category.add(b);
+                c = check(convert.fromJson(req.body(), Category.class));
+                if (c.id != null) throw new Exception("No id allowed");
+                Category.add(c);
             } catch (Exception e) {
                 res.status(400);
                 return sendError(req, res, "Invalid json");
